@@ -430,6 +430,15 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 4),
                           Text(
+                            product.brand,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
                             '${product.discountPercentage.toStringAsFixed(0)}% OFF',
                             style: TextStyle(
                               color: Colors.pink,
@@ -458,7 +467,6 @@ class HomeScreen extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 8),
                           Align(
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(

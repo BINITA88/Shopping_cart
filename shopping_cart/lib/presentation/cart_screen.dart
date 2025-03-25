@@ -433,7 +433,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                     ),
                                     SizedBox(height: 4),
                                     Text(
-                                      '12.96% OFF', // You can calculate this dynamically
+                                      '${product.discountPercentage.toStringAsFixed(0)}% OFF',
                                       style: TextStyle(
                                           color: Colors.pink, fontSize: 12),
                                     ),

@@ -430,7 +430,7 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            product.brand,
+                            product.category,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 11,

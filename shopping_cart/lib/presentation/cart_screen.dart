@@ -231,9 +231,11 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final cartState = ref.read(cartProvider);
-      productQuantities = {
-        for (var product in cartState) product.id.toString(): 1
-      };
+      setState(() {
+        productQuantities = {
+          for (var product in cartState) product.id.toString(): 1
+        };
+      });
     });
   }
 
@@ -249,6 +251,16 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           productQuantities[productId]! > 1) {
         productQuantities[productId] = productQuantities[productId]! - 1;
       }
+    });
+  }
+
+  void _deleteItem(String productId) {
+    setState(() {
+      productQuantities
+          .remove(productId); // Remove from the local quantities map
+      ref.read(cartProvider).removeWhere((product) =>
+          product.id.toString() ==
+          productId); // Remove the product from the local cartState
     });
   }
 
@@ -345,6 +357,15 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                       maxLines: 2,
                                     ),
                                     SizedBox(height: 4),
+                                    Text(
+                                      product.category,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -400,7 +421,14 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                               ),
                                             ],
                                           ),
-                                        )
+                                        ),
+                                        // Delete Icon
+                                        IconButton(
+                                          icon: Icon(Icons.delete,
+                                              color: Colors.red, size: 20),
+                                          onPressed: () =>
+                                              _deleteItem(productId),
+                                        ),
                                       ],
                                     ),
                                     SizedBox(height: 4),
@@ -420,7 +448,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   ),
                 ),
 
-                // Bottom Checkout Section - Updated to match image
+                // Bottom Checkout Section
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                   decoration: BoxDecoration(
